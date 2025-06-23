@@ -1,0 +1,38 @@
+.input-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  gap: 5px;
+  
+}
+
+.input {
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.card {
+  border: 1px solid blue;
+  background-color: rgb(207, 207, 255);
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 20px;
+  width: 300px;
+}
+
+.item {
+  border: 1px solid #0005;
+  margin-bottom: 3px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
