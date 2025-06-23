@@ -3,7 +3,6 @@
   justify-content: center;
   padding: 20px;
   gap: 5px;
-  
 }
 
 .input {
@@ -35,4 +34,10 @@
   justify-content: space-between;
   align-items: center;
   gap: 30px;
+}
+
+@media (width < 400px) {
+  .input-container {
+    flex-direction: column;
+  }
 }
