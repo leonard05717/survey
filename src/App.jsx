@@ -3,12 +3,17 @@ import './App.css'
 import { createClient } from '@supabase/supabase-js'
 import { ActionIcon, Button, LoadingOverlay, Modal, TextInput } from '@mantine/core';
 import { Icon123, IconEdit, IconHome, IconTrash } from '@tabler/icons-react';
+import About from './About';
+import { useNavigate } from 'react-router-dom';
 
 const supabaseUrl = 'https://kdpnxxcxvpczvrohriyd.supabase.co'
 const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtkcG54eGN4dnBjenZyb2hyaXlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2NjE3MjAsImV4cCI6MjA2NjIzNzcyMH0.kglD4_6NBOgNc7t6RQQW1irdmnvTZGM8l2fqGx4HS6Q";
 const supabase = createClient(supabaseUrl, key)
 
 function App() {
+
+  const navigate = useNavigate()
+
   const [names, setnames] = useState([
     {
       firstname: "",
@@ -86,25 +91,24 @@ function App() {
       "postgres_changes",
       { event: "*", schema: "public", table: "users" },
       (payload) => {
-        console.log("Hello world!")
-        // if (payload.eventType === "INSERT") {
-        //   setnames((prev) => [
-        //     payload.new,
-        //     ...prev,
-        //   ]);
-        // } else if (payload.eventType === "UPDATE") {
-        //   setnames((prev) =>
-        //     prev.map((item) =>
-        //       item.id === payload.new.id
-        //         ? (payload.new)
-        //         : item
-        //     )
-        //   );
-        // } else if (payload.eventType === "DELETE") {
-        //   setnames((prev) =>
-        //     prev.filter((item) => item.id !== payload.old.id)
-        //   );
-        // }
+        if (payload.eventType === "INSERT") {
+          setnames((prev) => [
+            payload.new,
+            ...prev,
+          ]);
+        } else if (payload.eventType === "UPDATE") {
+          setnames((prev) =>
+            prev.map((item) =>
+              item.id === payload.new.id
+                ? (payload.new)
+                : item
+            )
+          );
+        } else if (payload.eventType === "DELETE") {
+          setnames((prev) =>
+            prev.filter((item) => item.id !== payload.old.id)
+          );
+        }
       }
     )
     .subscribe();
@@ -162,7 +166,7 @@ function App() {
             )
           })}
           <Button onClick={() => {
-            
+            navigate("about")
           }}>Go to about page</Button>
       </div>
     </div>
