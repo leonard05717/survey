@@ -77,7 +77,41 @@ function App() {
 
 
   useEffect(() => {
+
     loadData()
+
+    const sectionSubscription = supabase
+    .channel("realtime:users")
+    .on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "users" },
+      (payload) => {
+        console.log("Hello world!")
+        // if (payload.eventType === "INSERT") {
+        //   setnames((prev) => [
+        //     payload.new,
+        //     ...prev,
+        //   ]);
+        // } else if (payload.eventType === "UPDATE") {
+        //   setnames((prev) =>
+        //     prev.map((item) =>
+        //       item.id === payload.new.id
+        //         ? (payload.new)
+        //         : item
+        //     )
+        //   );
+        // } else if (payload.eventType === "DELETE") {
+        //   setnames((prev) =>
+        //     prev.filter((item) => item.id !== payload.old.id)
+        //   );
+        // }
+      }
+    )
+    .subscribe();
+    
+    return () => {
+      supabase.removeChannel(sectionSubscription)
+    }
   }, [])
 
 
@@ -127,7 +161,9 @@ function App() {
             </div>
             )
           })}
-        
+          <Button onClick={() => {
+            
+          }}>Go to about page</Button>
       </div>
     </div>
   )
